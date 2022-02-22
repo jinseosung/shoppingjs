@@ -21,10 +21,31 @@ function creatHTMLString(item) {
       `;
 }
 
+// Handle button click
+function onButtonClick(event, items) {
+  const target = event.target;
+  const key = target.dataset.key;
+  const value = target.dataset.value;
+
+  if (key == null || value == null) {
+    return;
+  }
+
+  displayItems(items.filter((item) => item[key] === value));
+}
+
+// Set eventListeners
+function setEventListeners(items) {
+  const logo = document.querySelector(".logo");
+  const buttons = document.querySelector(".buttons");
+  logo.addEventListener("click", () => displayItems(items));
+  buttons.addEventListener("click", () => onButtonClick(event, items));
+}
+
 // main
 loadItems()
   .then((items) => {
     displayItems(items);
-    //  setEventListeners(items);
+    setEventListeners(items);
   })
   .catch(console.log);
